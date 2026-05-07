@@ -17,7 +17,7 @@ from routes.match import match_bp
 from routes.predict import predict_bp
 from routes.export import export_bp
 from routes.meta import meta_bp
-
+from routes.insights import insights_bp
 
 def create_app():
     app = Flask(__name__)
@@ -27,7 +27,7 @@ def create_app():
     CORS(app, origins=["http://localhost:5173", "http://localhost:3000"])
     JWTManager(app)
 
-    # Register blueprints
+    
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(players_bp, url_prefix="/api/players")
     app.register_blueprint(h2h_bp, url_prefix="/api/head-to-head")
@@ -36,6 +36,7 @@ def create_app():
     app.register_blueprint(predict_bp, url_prefix="/api/predict")
     app.register_blueprint(export_bp, url_prefix="/api/export")
     app.register_blueprint(meta_bp, url_prefix="/api/meta")
+    app.register_blueprint(insights_bp, url_prefix="/api/insights")
 
     @app.route("/api/health")
     def health():
@@ -47,7 +48,7 @@ def create_app():
 if __name__ == "__main__":
     init_db()
 
-    # Only seed with demo data if the database is empty
+
     from database.db import query as db_query
     match_count = db_query("SELECT COUNT(*) as cnt FROM matches", one=True)
     if not match_count or match_count["cnt"] == 0:
