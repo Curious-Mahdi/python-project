@@ -1,0 +1,317 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+/* ─── Design Tokens ─────────────────────────────────────────────── */
+:root {
+  --bg-primary: #0A0E1A;
+  --bg-secondary: #0F1629;
+  --bg-card: #131B2E;
+  --bg-card-hover: #1A2540;
+  --border: #1E2D4A;
+  --border-active: #00D4FF;
+
+  --accent-blue: #00D4FF;
+  --accent-indigo: #6366F1;
+  --accent-violet: #8B5CF6;
+  --accent-emerald: #10B981;
+  --accent-amber: #F59E0B;
+  --accent-red: #EF4444;
+  --accent-rose: #F43F5E;
+
+  /* IPL Team Colors */
+  --team-mi: #004BA0;
+  --team-csk: #F9CD05;
+  --team-rcb: #EC1C24;
+  --team-gt: #1C1C5E;
+  --team-lsg: #0057B8;
+  --team-rr: #FF2A6E;
+  --team-srh: #FF822A;
+  --team-kkr: #3A225D;
+  --team-dc: #0078BC;
+  --team-pbks: #DCDDDF;
+
+  --text-primary: #F0F4FF;
+  --text-secondary: #8B9CC4;
+  --text-muted: #4A5578;
+
+  --glow-blue: 0 0 20px rgba(0, 212, 255, 0.3);
+  --glow-indigo: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* ─── Reset & Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ─── Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
+/* ─── Typography ────────────────────────────────────────────────── */
+h1, h2, h3 { font-family: 'Rajdhani', sans-serif; letter-spacing: 0.02em; }
+.stat-number { font-variant-numeric: tabular-nums; }
+
+/* ─── Layout ────────────────────────────────────────────────────── */
+.app-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 60px 1fr;
+  min-height: 100vh;
+}
+
+.topbar {
+  grid-column: 1 / -1;
+  background: rgba(10, 14, 26, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+
+.sidebar {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  height: calc(100vh - 60px);
+  position: sticky; top: 60px;
+  overflow-y: auto;
+}
+
+.main-content {
+  padding: 2rem;
+  overflow-y: auto;
+  min-height: calc(100vh - 60px);
+}
+
+/* ─── Cards ─────────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover { border-color: rgba(0, 212, 255, 0.3); }
+
+.card-glow {
+  box-shadow: var(--glow-blue);
+  border-color: var(--accent-blue);
+}
+
+.glass {
+  background: rgba(19, 27, 46, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(30, 45, 74, 0.8);
+  border-radius: 16px;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600; font-size: 0.875rem;
+  cursor: pointer; border: none;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+  color: #0A0E1A;
+  font-weight: 700;
+}
+.btn-primary:hover {
+  box-shadow: var(--glow-blue);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--accent-red);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.btn-danger:hover { background: rgba(239, 68, 68, 0.25); }
+
+/* ─── Inputs ────────────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0,212,255,0.1); }
+.input::placeholder { color: var(--text-muted); }
+
+/* ─── Badges & Tags ─────────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.badge-blue { background: rgba(0,212,255,0.12); color: var(--accent-blue); }
+.badge-green { background: rgba(16,185,129,0.12); color: var(--accent-emerald); }
+.badge-red { background: rgba(239,68,68,0.12); color: var(--accent-red); }
+.badge-amber { background: rgba(245,158,11,0.12); color: var(--accent-amber); }
+.badge-violet { background: rgba(139,92,246,0.12); color: var(--accent-violet); }
+
+/* ─── Stat Grid ─────────────────────────────────────────────────── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.stat-item {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-item .stat-value {
+  font-size: 1.75rem; font-weight: 700;
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--accent-blue);
+}
+
+.stat-item .stat-label {
+  font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ─── Nav Items ─────────────────────────────────────────────────── */
+.nav-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px; margin: 0.15rem 0.75rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 0.875rem; font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-item:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+.nav-item.active {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--accent-blue);
+  border-right: 2px solid var(--accent-blue);
+}
+
+/* ─── AI Story Box ───────────────────────────────────────────────── */
+.ai-box {
+  background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(0,212,255,0.05));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 12px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.ai-box::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent-indigo), var(--accent-blue));
+}
+
+/* ─── Progress Bars ──────────────────────────────────────────────── */
+.progress-bar {
+  height: 6px; border-radius: 3px;
+  background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-indigo));
+  transition: width 0.8s ease;
+}
+
+/* ─── Divider ────────────────────────────────────────────────────── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+/* ─── Loading Spinner ────────────────────────────────────────────── */
+.spinner {
+  width: 32px; height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Glow Text ─────────────────────────────────────────────────── */
+.text-glow {
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+/* ─── Team Color Borders ─────────────────────────────────────────── */
+.team-mi { border-color: var(--team-mi) !important; }
+.team-csk { border-color: var(--team-csk) !important; }
+.team-rcb { border-color: var(--team-rcb) !important; }
+.team-gt { border-color: var(--team-gt) !important; }
+.team-rr { border-color: var(--team-rr) !important; }
+.team-srh { border-color: var(--team-srh) !important; }
+.team-kkr { border-color: var(--team-kkr) !important; }
+.team-dc { border-color: var(--team-dc) !important; }
+.team-lsg { border-color: var(--team-lsg) !important; }
+
+/* ─── Animations ─────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,212,255,0.2); }
+  50% { box-shadow: 0 0 25px rgba(0,212,255,0.5); }
+}
+.animate-fade-up { animation: fadeInUp 0.4s ease forwards; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* ─── Recharts custom ────────────────────────────────────────────── */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text-primary) !important;
+}
+
+/* ─── Page header ────────────────────────────────────────────────── */
+.page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.page-title {
+  font-size: 2rem; font-weight: 700;
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.page-subtitle { color: var(--text-secondary); font-size: 0.875rem; margin-top: 0.25rem; }
