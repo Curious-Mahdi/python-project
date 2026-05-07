@@ -6,6 +6,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from config import JWT_SECRET_KEY
+from logger import logger, log_request
 from database.db import init_db
 from database.seed import seed
 
@@ -22,11 +23,12 @@ from routes.insights import insights_bp
 def create_app():
     app = Flask(__name__)
     app.config["JWT_SECRET_KEY"] = JWT_SECRET_KEY
+    
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False  # Tokens don't expire for demo
 
     CORS(app, origins=["http://localhost:5173", "http://localhost:3000"])
     JWTManager(app)
-
+app.after_request(log_request)
     
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(players_bp, url_prefix="/api/players")
