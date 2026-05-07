@@ -20,16 +20,16 @@ from routes.export import export_bp
 from routes.meta import meta_bp
 from routes.insights import insights_bp
 
+
 def create_app():
     app = Flask(__name__)
     app.config["JWT_SECRET_KEY"] = JWT_SECRET_KEY
-    
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False  # Tokens don't expire for demo
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = False
 
     CORS(app, origins=["http://localhost:5173", "http://localhost:3000"])
     JWTManager(app)
-app.after_request(log_request)
-    
+    app.after_request(log_request)
+
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(players_bp, url_prefix="/api/players")
     app.register_blueprint(h2h_bp, url_prefix="/api/head-to-head")
@@ -50,7 +50,6 @@ app.after_request(log_request)
 if __name__ == "__main__":
     init_db()
 
-
     from database.db import query as db_query
     match_count = db_query("SELECT COUNT(*) as cnt FROM matches", one=True)
     if not match_count or match_count["cnt"] == 0:
@@ -62,6 +61,4 @@ if __name__ == "__main__":
 
     app = create_app()
     print("[SportsMassive] Backend running at http://localhost:5000")
-    print("[SportsMassive] API: /api/auth, /api/players, /api/head-to-head, /api/match, /api/predict\n")
     app.run(debug=True, port=5000)
-
